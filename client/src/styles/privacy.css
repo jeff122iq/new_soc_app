@@ -1,0 +1,15 @@
+.privacyPage {
+    width: 100%;
+    min-height: 100vh;
+    background: #ffffff;
+    text-align: start;
+    margin: 0;
+}
+
+.privacyPage > p {
+    margin: 0;
+}
+
+.privacyPage > h1 {
+    margin: 0;
+}

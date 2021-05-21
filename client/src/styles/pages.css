@@ -1,0 +1,12 @@
+.page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    margin: 100px 0;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+}

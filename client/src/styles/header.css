@@ -1,0 +1,113 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    background-color: #37a0bd;
+    color: #ffffff;
+    position: fixed;
+    box-sizing: border-box;
+}
+
+.header > .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header > .container > h1 {
+    margin: 0;
+}
+
+.header > .container > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.header > .container > ul > a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 15px;
+    font-size: 1.25rem;
+    transition: all 0.3s;
+}
+
+.adaptiveMenu {
+    display: none;
+}
+
+.header > .container > ul > a:hover {
+    text-shadow:0 0 10px #ffffff;
+}
+
+.header > .container > .fab {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .header > .container > ul {
+        margin: 0;
+        padding: 0;
+        display: none;
+    }
+
+    .header > .container > .fab {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #EE423D;
+        font-size: 40px;
+        color: #ffffff;
+    }
+
+    .closeMenu {
+        display: flex;
+        width: 100%;
+        max-width: 400px;
+        min-height: 100vh;
+        transform: translateX(-100%);
+        transition: all 0.5s;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .closeMenu > ul {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .closeMenu > ul > a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .adaptiveMenu {
+        z-index: 100;
+        transform: translateX(0%);
+        transition: all 0.5s;
+        display: flex;
+        width: 100%;
+        max-width: 400px;
+        background-color: #ffbf00;
+        color: #ffffff;
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-height: 100vh;
+    }
+
+    .adaptiveMenu > ul {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .adaptiveMenu > ul > a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+}

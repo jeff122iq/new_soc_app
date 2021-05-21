@@ -1,0 +1,75 @@
+.home {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.home > .container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.title {
+    width: 100%;
+    max-width: 37.5rem;
+}
+
+.title > ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    border: none;
+    border-bottom: 1px solid #ffffff;
+}
+
+.title > ul > .technologies {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 20px;
+}
+
+.title > ul > .technologies > i {
+    font-size: 50px;
+}
+
+.image {
+    width: 100%;
+    min-width: 400px;
+    height: 400px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("../images/photo_2020-09-21_22-50-44.jpg");
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.image:hover {
+    width: 450px;
+    filter: brightness(40%) blur(5px);
+    transition: all 0.5s;
+}
+
+.info {
+    text-align: start;
+}
+
+@media screen and (max-width: 1024px) {
+    .home {
+        display: flex;
+        justify-content: center;
+    }
+    .home > .container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
