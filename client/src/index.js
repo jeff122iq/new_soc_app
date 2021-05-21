@@ -2,14 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
+import {createStore, applyMiddleware} from 'redux'
+import {Provider} from 'react-redux'
+import thunk from 'redux-thunk'
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
     <React.StrictMode>
-        <div className="brightness">
-            <div className="background">
-                <App/>
+        <Provider store={store}>
+            <div className="brightness">
+                <div className="background">
+                    <App/>
+                </div>
             </div>
-        </div>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 )
