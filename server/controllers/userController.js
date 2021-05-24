@@ -2,9 +2,11 @@ const { User } = require("../db/models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-
+const crypto = require("crypto");
 
 exports.register = async(req, res) => {
+    const id = crypto.randomBytes(16).toString("hex");
+
     const { password, confirmPassword, email } = req.body || {};
     if (!email) {
         res.status(400).json({message: "Заполните поле email!"})
@@ -25,6 +27,7 @@ exports.register = async(req, res) => {
     const passwordHash = await bcrypt.hash(password, 10);
 
     let user = User.build({
+        id: id,
         email: email,
         password: passwordHash,
         confirmPassword: passwordHash
