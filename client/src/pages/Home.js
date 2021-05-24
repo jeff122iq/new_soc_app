@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Page from "../components/Page.js"
 import Container from "../components/Container"
 import "../styles/home.css"

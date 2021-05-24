@@ -3,8 +3,13 @@ import Page from "../components/Page"
 import {Link} from "react-router-dom"
 import {Button, TextField} from "@material-ui/core"
 import "../styles/authForm.css"
+import {connect} from "react-redux";
+import { ACTION_TYPES } from "../actions/actionTypes";
 
-const LogIn = () => {
+const LogIn = ( props ) => {
+
+    const value = props.state
+
     return (
         <Page>
             <form action="" className="loginForm">
@@ -15,14 +20,19 @@ const LogIn = () => {
                         label={"Email"}
                         type={"email"}
                         variant={"filled"}
+                        onChange={e => value.email = e.target.value}
                     />
                     <TextField
                         className={"input"}
                         label={"Password"}
                         type={"password"}
                         variant={"filled"}
+                        onChange={e => value.password = e.target.value}
                     />
-                    <Button className={"button"}>
+                    <Button
+                        className={"button"}
+                        onClick={props.login}
+                    >
                         Log-in
                     </Button>
                 </form>
@@ -30,4 +40,19 @@ const LogIn = () => {
     );
 };
 
-export default LogIn
+const mapStateToProps = state => {
+    return { state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: () =>{
+            dispatch ({
+                type: ACTION_TYPES.LOGIN,
+            })
+        }}
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn)

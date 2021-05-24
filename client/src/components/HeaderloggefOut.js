@@ -57,7 +57,7 @@ const adaptiveMenu = [
     },
 ]
 
-const Header = () => {
+const HeaderloggefOut = () => {
     const [open, setOpen] = useState(false)
 
     const openMenu = () => {
@@ -110,4 +110,4 @@ const Header = () => {
     );
 };
 
-export default Header
+export default HeaderloggefOut
