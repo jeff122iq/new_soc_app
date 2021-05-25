@@ -1,12 +1,12 @@
 import React from 'react';
 import UserPage from "../components/UserPage";
 
-const Home = props => {
+const MyPage = () => {
     return (
         <UserPage>
-            <h1>Home</h1>
+
         </UserPage>
     );
 };
 
-export default Home;
+export default MyPage;

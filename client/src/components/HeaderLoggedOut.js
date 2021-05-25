@@ -8,7 +8,7 @@ import Fab from '@material-ui/core/Fab';
 
 const navMenu = [
     {
-        name: "Home",
+        name: "Main",
         link: "/"
     },
     {
@@ -35,7 +35,7 @@ const authMenu = [
 
 const adaptiveMenu = [
     {
-        name: "Home",
+        name: "Main",
         link: "/"
     },
     {
@@ -57,7 +57,7 @@ const adaptiveMenu = [
     },
 ]
 
-const HeaderloggefOut = () => {
+const HeaderLoggedOut = () => {
     const [open, setOpen] = useState(false)
 
     const openMenu = () => {
@@ -110,4 +110,4 @@ const HeaderloggefOut = () => {
     );
 };
 
-export default HeaderloggefOut
+export default HeaderLoggedOut
