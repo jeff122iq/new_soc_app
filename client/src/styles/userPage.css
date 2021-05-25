@@ -1,0 +1,10 @@
+.userPageContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.userContent {
+    width: 100%;
+    background-color: #44393D;
+    min-height: 100vh;
+}

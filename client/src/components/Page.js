@@ -1,18 +1,20 @@
 import React, {useState} from 'react'
-import HeaderloggefOut from './HeaderloggefOut.js'
+import HeaderLoggedOut from './HeaderLoggedOut.js'
 import Container from './Container.js'
 import "../styles/pages.css"
 import Footer from "./Footer"
 import {connect} from "react-redux";
+import HeaderLoggedIn from "./HeaderLoggedIn";
 
-const Page = ({children}) => {
+const Page = (props) => {
+
     return (
         <div>
-            <HeaderloggefOut/>
+            {props.isLoggedIn ? <HeaderLoggedIn/> : <HeaderLoggedOut/>}
             <div className={"page"}>
                 <Container>
                     <div className={"content"}>
-                        {children}
+                        {props.children}
                     </div>
                 </Container>
             </div>
@@ -21,22 +23,9 @@ const Page = ({children}) => {
     )
 };
 
-// const mapStateToProps = state => {
-//
-//     const {isLoggedIn} = state
-//
-//     return { isLoggedIn }
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         login: () =>{
-//             dispatch ({
-//                 type: ACTION_TYPES.LOGIN,
-//                 isLoggedIn: true
-//             })
-//         }}
-// }
+const mapStateToProps = state => {
+    const { isLoggedIn } = state
+    return {isLoggedIn}
+}
 
-
-export default connect()(Page)
+export default connect(mapStateToProps)(Page)

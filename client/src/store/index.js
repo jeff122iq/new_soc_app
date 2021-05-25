@@ -10,13 +10,14 @@ const initialState = {
     isLoggedIn: false
 }
 
-const register = async (email, password, confirmPassword) => {
+const register =  async (email, password, confirmPassword) => {
     try {
         const response = await Axios.post("http://localhost:5000/register", {
             email,
             password,
             confirmPassword
         }, {headers: {'Content-Type': 'application/json'}})
+        localStorage.setItem("token", response.data.AccessToken)
         console.log(response.data)
     } catch (e) {
         console.log(e)
@@ -28,23 +29,41 @@ const login = async (email, password) => {
         const response = await Axios.post("http://localhost:5000/login", {email, password})
         console.log(response.data)
         localStorage.setItem("token", response.data.AccessToken)
-        // todo dispatch change isLoggedIn var
     } catch (e) {
         console.log(e)
     }
 }
 
-const reducer = async (prevState = initialState, action) => {
+const logout = () => {
+    localStorage.clear()
+    console.log(initialState)
+}
+
+const reducer = (prevState = initialState, action) => {
     console.log("PREV STATE =>", prevState)
     switch (action.type) {
         case ACTION_TYPES.REGISTER:
-            await register(prevState.email, prevState.password, prevState.confirmPassword)
-            return
+            register(prevState.email, prevState.password, prevState.confirmPassword)
+                return {
+                    ...prevState,
+                    isLoggedIn: true
+                }
         case ACTION_TYPES.LOGIN:
-            await login(prevState.email, prevState.password)
-            return
+            login(prevState.email, prevState.password)
+            return {
+                ...prevState,
+                isLoggedIn: true
+            }
+        case ACTION_TYPES.LOGOUT:
+            logout()
+            return {
+                ...prevState,
+                isLoggedIn: false
+            }
         default:
-            return prevState
+            return {
+                ...prevState,
+            }
     }
 }
 

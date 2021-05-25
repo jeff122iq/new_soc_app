@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 
 const Register = ( props ) => {
     console.log("PROPS =>", props)
+
     const value = props.state
 
     return (
@@ -52,7 +53,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         register: () =>{
             dispatch ({
-            type: ACTION_TYPES.REGISTER,
+                type: ACTION_TYPES.REGISTER,
         })
     }}
 }

@@ -1,0 +1,15 @@
+.sideBar {
+    width: calc(100% / 4);
+    min-height: 100vh;
+    background-color: #ffbf00;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.sideBar > ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: white;
+}

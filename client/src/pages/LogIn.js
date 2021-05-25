@@ -1,19 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Page from "../components/Page"
 import {Link} from "react-router-dom"
 import {Button, TextField} from "@material-ui/core"
 import "../styles/authForm.css"
 import {connect} from "react-redux";
 import { ACTION_TYPES } from "../actions/actionTypes";
+import {useHistory} from "react-router-dom"
 
 const LogIn = ( props ) => {
-
     const value = props.state
+    const history = useHistory()
+    const handleLogin = () => {
+        props.login()
+        history.push("/mypage")
+    }
 
     return (
         <Page>
             <form action="" className="loginForm">
-                    <h1>Log-in please!</h1>
+                <h1>Log-in please!</h1>
                     <span>Haven't account? <Link to="/register">Create now!</Link></span>
                     <TextField
                         className={"input"}
@@ -31,7 +36,7 @@ const LogIn = ( props ) => {
                     />
                     <Button
                         className={"button"}
-                        onClick={props.login}
+                        onClick={handleLogin}
                     >
                         Log-in
                     </Button>
