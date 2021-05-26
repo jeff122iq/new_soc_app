@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Container from "./Container"
-import "../styles/header.css"
+import "../styles/headerLoggedOut.css"
 import {Link} from "react-router-dom"
 import MenuIcon from '@material-ui/icons/Menu';
 import Fab from '@material-ui/core/Fab';

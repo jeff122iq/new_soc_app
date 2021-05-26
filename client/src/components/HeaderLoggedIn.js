@@ -1,5 +1,5 @@
 import React from 'react';
-import "../styles/header.css"
+import "../styles/headerLoggedIn.css"
 import {Button} from "@material-ui/core";
 import {connect} from "react-redux";
 import {ACTION_TYPES} from "../actions/actionTypes";
@@ -14,7 +14,7 @@ const HeaderLoggedIn = (props) => {
     }
 
     return (
-        <header className="header">
+        <header className="headerLoggedIn">
             <h1>HeaderLoggedIn</h1>
             <Button style={{
                 background: "red",

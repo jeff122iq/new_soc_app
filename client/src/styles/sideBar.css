@@ -2,9 +2,7 @@
     width: calc(100% / 4);
     min-height: 100vh;
     background-color: #ffbf00;
-    position: absolute;
-    top: 0;
-    left: 0;
+    z-index: 10;
 }
 
 .sideBar > ul {

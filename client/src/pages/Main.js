@@ -49,7 +49,7 @@ const Main = () => {
                         <ul>
                             {technologies.map((item, idx) => {
                                 return (
-                                    <div className={"technologies"}>
+                                    <div key={idx} className={"technologies"}>
                                         <i className={item.image}/>
                                         <p>{item.name}</p>
                                     </div>

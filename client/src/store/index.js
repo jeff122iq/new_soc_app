@@ -4,15 +4,17 @@ import thunk from "redux-thunk"
 import {ACTION_TYPES} from "../actions/actionTypes";
 
 const initialState = {
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
     isLoggedIn: false
 }
 
-const register =  async (email, password, confirmPassword) => {
+const register =  async (username, email, password, confirmPassword) => {
     try {
         const response = await Axios.post("http://localhost:5000/register", {
+            username,
             email,
             password,
             confirmPassword
@@ -22,6 +24,10 @@ const register =  async (email, password, confirmPassword) => {
     } catch (e) {
         console.log(e)
     }
+}
+
+const isAuthenticated = () => {
+    localStorage.getItem("token")
 }
 
 const login = async (email, password) => {
@@ -43,13 +49,33 @@ const reducer = (prevState = initialState, action) => {
     console.log("PREV STATE =>", prevState)
     switch (action.type) {
         case ACTION_TYPES.REGISTER:
-            register(prevState.email, prevState.password, prevState.confirmPassword)
+            register(prevState.username, prevState.email, prevState.password, prevState.confirmPassword)
+            if (localStorage.getItem("token")) {
+                console.log("PREV_STATE =>", prevState)
                 return {
                     ...prevState,
                     isLoggedIn: true
                 }
+            } else {
+                return {
+                    ...prevState,
+                }
+            }
         case ACTION_TYPES.LOGIN:
             login(prevState.email, prevState.password)
+            if (localStorage.getItem("token")) {
+                console.log("PREV_STATE =>", prevState)
+                return {
+                    ...prevState,
+                    isLoggedIn: true
+                }
+            } else {
+                return {
+                    ...prevState,
+                }
+            }
+        case ACTION_TYPES.IS_AUTHENTICATED:
+            isAuthenticated()
             return {
                 ...prevState,
                 isLoggedIn: true
