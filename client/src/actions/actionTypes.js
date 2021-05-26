@@ -6,4 +6,5 @@ export const ACTION_TYPES = {
     REGISTER: Symbol(),
     LOGIN: Symbol(),
     LOGOUT: Symbol(),
+    IS_AUTHENTICATED: Symbol()
 }

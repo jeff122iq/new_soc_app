@@ -10,6 +10,7 @@ import {useHistory} from "react-router-dom"
 const LogIn = ( props ) => {
     const value = props.state
     const history = useHistory()
+
     const handleLogin = () => {
         props.login()
         history.push("/mypage")
@@ -51,11 +52,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login: () =>{
+        login: () => {
             dispatch ({
                 type: ACTION_TYPES.LOGIN,
             })
-        }}
+        },
+    }
 }
 
 

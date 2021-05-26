@@ -8,16 +8,14 @@ import LogIn from "../pages/LogIn"
 import Register from "../pages/Register"
 import Home from "../pages/Home";
 import MyPage from "../pages/MyPage";
+import {ACTION_TYPES} from "../actions/actionTypes";
+import {connect} from "react-redux";
+import Messages from "../pages/Messages";
 
 
-const Router = () => {
-
-    const isAuthentiticated = localStorage.getItem("token")
-
+const Router = (props) => {
     return (
         <BrowserRouter>
-            {isAuthentiticated
-                ?
                 <Switch>
                     <Route path={"/"} exact>
                         <Main/>
@@ -43,29 +41,17 @@ const Router = () => {
                     <Route path={"/mypage"} exact>
                         <MyPage/>
                     </Route>
+                    <Route path={"/messages"} exact>
+                        <Messages/>
+                    </Route>
                 </Switch>
-                :
-                <Switch>
-                    <Route path={"/"} exact>
-                        <Main/>
-                    </Route>
-                    <Route path={"/contacts"} exact>
-                        <Contacts/>
-                    </Route>
-                    <Route path={"/about"} exact>
-                        <About/>
-                    </Route>
-                    <Route path={"/register"} exact>
-                        <Register/>
-                    </Route>
-                    <Route path={"/login"} exact>
-                        <LogIn/>
-                    </Route>
-                    <Redirect to={"/"}/>
-                </Switch>
-            }
         </BrowserRouter>
     );
+};
+
+const mapStateToProps = state => {
+    console.log("STATE", state)
+    return { state }
 }
 
-export default Router
+export default connect(mapStateToProps)(Router)

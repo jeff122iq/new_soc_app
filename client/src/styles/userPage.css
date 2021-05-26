@@ -4,7 +4,36 @@
     justify-content: space-between;
 }
 .userContent {
-    width: 100%;
+    width: calc(100%);
     background-color: #44393D;
     min-height: 100vh;
+    padding: 100px 100px 0 100px;
+}
+.userInfo {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.userName {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 20px;
+    color: white;
+    text-align: start;
+}
+
+.userName > h1 {
+    margin: 0;
+}
+
+.avatar {
+    width: 100%;
+    max-width: 200px;
+    height: 200px;
+    font-size: 10rem;
+    display: flex;
+    justify-content: center;
 }

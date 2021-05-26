@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import "../styles/userPage.css"
 
 const UserPage = (props) => {
+
     return (
         <div>
             <HeaderLoggedIn/>

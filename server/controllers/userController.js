@@ -5,6 +5,7 @@ const config = require("config");
 const crypto = require("crypto");
 
 exports.register = async(req, res) => {
+    const username = req.body.username
     const id = crypto.randomBytes(16).toString("hex");
     const { password, confirmPassword, email } = req.body || {};
     if (!email) {
@@ -26,6 +27,7 @@ exports.register = async(req, res) => {
     const passwordHash = await bcrypt.hash(password, 10);
 
     let user = User.build({
+        username: username,
         id: id,
         email: email,
         password: passwordHash,
@@ -35,10 +37,10 @@ exports.register = async(req, res) => {
         console.log(user);
         console.log(passwordHash)
         const AccessToken = jwt.sign(
-            { id, email },
+            { id, email, username },
             config.get("JWT_SECRET"), {expiresIn: "1h"}
         );
-        res.json({ AccessToken, id, email });
+        res.json({ AccessToken });
         await user.save();
         console.log(`${"\x1b[33m"}REGISTER SUCCESS!`, "\x1b[0m");
     } else {
@@ -58,7 +60,7 @@ exports.login = async (req, res) => {
     }
     // Access token generate
     const AccessToken = jwt.sign(
-        { id: user.id, email: user.email },
+        { id: user.id, username: user.username, email: user.email },
         config.get("JWT_SECRET"), {expiresIn: "1h"}
     );
     res.json({ AccessToken, id: user.id, email: user.email });
