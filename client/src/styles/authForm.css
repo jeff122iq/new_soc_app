@@ -33,6 +33,7 @@
 
 .loginForm {
     animation: fadeInLeft 0.5s;
+    z-index: 1;
     width: 100%;
     max-width: 400px;
     background:#37a0bd;

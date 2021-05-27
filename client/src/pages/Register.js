@@ -14,7 +14,7 @@ const Register = (props) => {
     const handleRegister = () => {
         props.register()
         props.isAuthenticated()
-        history.push("/mypage")
+        history.push("/home")
     }
 
     return (

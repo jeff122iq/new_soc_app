@@ -1,10 +1,8 @@
-// export const REGISTER = "REGISTER"
-// export const LOGIN = "LOGIN"
-// export const LOGOUT = "LOGOUT"
-
 export const ACTION_TYPES = {
     REGISTER: Symbol(),
     LOGIN: Symbol(),
     LOGOUT: Symbol(),
-    IS_AUTHENTICATED: Symbol()
+    IS_AUTHENTICATED: Symbol(),
+    CREATE_POST: Symbol(),
+    GET_POSTS: Symbol(),
 }
