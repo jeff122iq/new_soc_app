@@ -1,5 +1,7 @@
 const express = require("express")
 const router = express.Router()
+const { postMiddleware } = require("./middlewarse/postMiddleware")
+
 const {
     login,
     register,
@@ -13,10 +15,11 @@ const {
 //user routes
 router.post("/login", login)
 router.post("/register", register)
+router.get("/user/:id")
 router.get("/", home)
 
 //post routes
-router.post("/create-post", createPost)
-router.get("/posts", getPosts)
+router.post("/create-post", [postMiddleware], createPost)
+router.get("/posts", [postMiddleware], getPosts)
 
 module.exports = router

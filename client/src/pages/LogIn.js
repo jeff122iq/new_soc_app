@@ -13,7 +13,7 @@ const LogIn = ( props ) => {
 
     const handleLogin = () => {
         props.login()
-        history.push("/mypage")
+        history.push("/home")
     }
 
     return (

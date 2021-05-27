@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom"
 import Main from "../pages/Main.js"
 import About from "../pages/About"
@@ -11,9 +11,12 @@ import MyPage from "../pages/MyPage";
 import {ACTION_TYPES} from "../actions/actionTypes";
 import {connect} from "react-redux";
 import Messages from "../pages/Messages";
+import Subscribers from "../pages/Subscribers";
+import jwtDecode from "jwt-decode";
 
 
 const Router = (props) => {
+
     return (
         <BrowserRouter>
                 <Switch>
@@ -38,11 +41,14 @@ const Router = (props) => {
                     <Route path={"/register"} exact>
                         <Register/>
                     </Route>
-                    <Route path={"/mypage"} exact>
+                    <Route path={"/mypage/:username"} exact>
                         <MyPage/>
                     </Route>
                     <Route path={"/messages"} exact>
                         <Messages/>
+                    </Route>
+                    <Route path={"/subscribers"} exact>
+                        <Subscribers/>
                     </Route>
                 </Switch>
         </BrowserRouter>

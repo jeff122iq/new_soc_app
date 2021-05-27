@@ -8,10 +8,36 @@ const initialState = {
     email: "",
     password: "",
     confirmPassword: "",
+    title: "",
+    description: "",
     isLoggedIn: false
 }
 
-const register =  async (username, email, password, confirmPassword) => {
+
+const createPost = async (title, description) => {
+    const token = localStorage.getItem("token")
+    try {
+        const post = await Axios.post("http://localhost:5000/create-post", {title, description}, {headers: {
+                'Authorization': `Bearer ${token}`
+            }})
+        console.log(post.data)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const getPosts = async() => {
+    try {
+        const token = localStorage.getItem("token")
+        const posts = await Axios.get("http://localhost:5000/posts", {headers: {
+                'Authorization': `Bearer ${token}`}})
+        console.log(posts)
+    } catch(e) {
+        console.log(e)
+    }
+}
+
+const register = async (username, email, password, confirmPassword) => {
     try {
         const response = await Axios.post("http://localhost:5000/register", {
             username,
@@ -86,6 +112,16 @@ const reducer = (prevState = initialState, action) => {
                 ...prevState,
                 isLoggedIn: false
             }
+        case ACTION_TYPES.CREATE_POST:
+            createPost(prevState.title, prevState.description)
+            return {
+                ...prevState
+            }
+        case ACTION_TYPES.GET_POSTS:
+            getPosts()
+            return {
+                ...prevState
+            }
         default:
             return {
                 ...prevState,
@@ -93,4 +129,4 @@ const reducer = (prevState = initialState, action) => {
     }
 }
 
-export default createStore( reducer, applyMiddleware(thunk) );
+export default createStore(reducer, applyMiddleware(thunk));

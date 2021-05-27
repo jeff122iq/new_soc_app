@@ -70,3 +70,11 @@ exports.login = async (req, res) => {
 exports.home = (req, res) => {
     res.send("Home")
 }
+
+exports.getUser = (req, res) => {
+
+}
+
+exports.getUserStatus = () => {
+
+}
