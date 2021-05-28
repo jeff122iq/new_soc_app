@@ -5,23 +5,32 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("https://img2.goodfon.ru/wallpaper/nbig/e/5d/material-desing-color-5123.jpg");
+  background-image: url("./images/image.png");
+  backdrop-filter: brightness(0.2);
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Montserrat", sans-serif;
   position: relative;
+  /*opacity: 0.2;*/
+}
+
+img {
+  width: 100%;
+  min-height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.2;
 }
 
 .background {
   width: 100%;
   min-height: 100vh;
-  backdrop-filter: blur(20px);
 }
 
 .brightness {
   width: 100%;
   min-height: 100vh;
-  backdrop-filter: brightness(40%);
 }
 
 code {

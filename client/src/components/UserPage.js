@@ -10,9 +10,9 @@ const UserPage = (props) => {
             <HeaderLoggedIn/>
             <div className="userPageContainer">
                 <Sidebar/>
-                <div className="userContent">
-                    {props.children}
-                </div>
+                    <div className="userContent">
+                        {props.children}
+                    </div>
             </div>
         </div>
     );

@@ -10,9 +10,9 @@ const initialState = {
     confirmPassword: "",
     title: "",
     description: "",
-    isLoggedIn: false
+    isLoggedIn: false,
+    posts: []
 }
-
 
 const createPost = async (title, description) => {
     const token = localStorage.getItem("token")
@@ -20,7 +20,8 @@ const createPost = async (title, description) => {
         const post = await Axios.post("http://localhost:5000/create-post", {title, description}, {headers: {
                 'Authorization': `Bearer ${token}`
             }})
-        console.log(post.data)
+        const result = post.data
+        return initialState.posts.push(result)
     } catch (e) {
         console.log(e)
     }
@@ -29,11 +30,16 @@ const createPost = async (title, description) => {
 const getPosts = async() => {
     try {
         const token = localStorage.getItem("token")
-        const posts = await Axios.get("http://localhost:5000/posts", {headers: {
+        const dbPosts = await Axios.get("http://localhost:5000/posts", {headers: {
                 'Authorization': `Bearer ${token}`}})
-        console.log(posts)
+        initialState.posts.length = 0
+        dbPosts.data.map(item => {
+            initialState.posts.push(item)
+        })
+        console.log("GET_POSTS", initialState.posts)
     } catch(e) {
         console.log(e)
+        return null
     }
 }
 
@@ -47,8 +53,10 @@ const register = async (username, email, password, confirmPassword) => {
         }, {headers: {'Content-Type': 'application/json'}})
         localStorage.setItem("token", response.data.AccessToken)
         console.log(response.data)
+        return response.data
     } catch (e) {
         console.log(e)
+        return null
     }
 }
 
@@ -61,8 +69,10 @@ const login = async (email, password) => {
         const response = await Axios.post("http://localhost:5000/login", {email, password})
         console.log(response.data)
         localStorage.setItem("token", response.data.AccessToken)
+        return response.data
     } catch (e) {
         console.log(e)
+        return e
     }
 }
 
@@ -115,12 +125,14 @@ const reducer = (prevState = initialState, action) => {
         case ACTION_TYPES.CREATE_POST:
             createPost(prevState.title, prevState.description)
             return {
-                ...prevState
+                ...prevState,
+                posts: prevState.posts
             }
         case ACTION_TYPES.GET_POSTS:
             getPosts()
             return {
-                ...prevState
+                ...prevState,
+                posts: prevState.posts
             }
         default:
             return {

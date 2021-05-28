@@ -6,18 +6,29 @@ import {
     Fab,
     Modal,
     Backdrop,
-    Fade, TextField, Button
+    Fade,
+    TextField,
+    Button,
+    IconButton, Paper,
 } from "@material-ui/core";
 import {
-    Add
+    Add,
+    Chat,
+    Favorite,
+    BookmarkBorder
 } from "@material-ui/icons";
 import {connect} from "react-redux";
 import {ACTION_TYPES} from "../actions/actionTypes";
+import Loader from "../components/Loader";
 
-const MyPage = ( props ) => {
+const MyPage = (props) => {
     const [open, setOpen] = useState(false)
     const [token, setToken] = useState(localStorage.getItem("token"))
+    const [like, setLike] = useState(false)
     const value = props.state
+    const posts = props.state.posts
+    console.log("PROPS", props)
+    console.log("POSTS_FROM_PROPS =>", posts)
 
     const decode = jwtDecode(token)
     console.log(decode)
@@ -29,13 +40,23 @@ const MyPage = ( props ) => {
         setOpen(false);
     };
 
+    const handleOpenPost = (item) => {
+        console.log(item.id)
+        return item.id
+    }
+
     const handleCreatePost = () => {
         setOpen(false);
         props.createPost()
     }
 
-    useEffect(() => {
-        props.getPosts()
+    const likePost = () => {
+        setLike(true)
+        console.log("LIKE")
+    }
+
+    useEffect(async () => {
+        await props.getPosts()
     }, [])
 
     return (
@@ -48,7 +69,6 @@ const MyPage = ( props ) => {
                     <h1>{decode.username}</h1>
                     <p>{decode.email}</p>
                     <span>Status:</span>
-                    {/*<p>{status.data}</p>*/}
                 </div>
             </div>
             <div className="posts">
@@ -58,7 +78,33 @@ const MyPage = ( props ) => {
                         <Add/>
                     </Fab>
                 </div>
+                {/*<Loader/>*/}
+                {
+                    posts.map(item => {
+                        return (
+                            <div className="post" id={item.id} >
+                                <div className="postInfo" onClick={() => handleOpenPost(item)}>
+                                    <h1>{item.title}</h1>
+                                    <p>{item.description}</p>
+                                    <p>Create by: {value.userId}</p>
+                                </div>
+                                <footer className="postFooter">
+                                    <IconButton onClick={likePost}>
+                                        <Favorite/>
+                                    </IconButton>
+                                    <IconButton>
+                                        <Chat/>
+                                    </IconButton>
+                                    <IconButton>
+                                        <BookmarkBorder/>
+                                    </IconButton>
+                                </footer>
+                            </div>
+                        )
+                    })
+                }
             </div>
+
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -102,13 +148,13 @@ const MyPage = ( props ) => {
 };
 
 const mapStateToProps = state => {
-    return { state }
+    return {state}
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         createPost: () => {
-            dispatch ({
+            dispatch({
                 type: ACTION_TYPES.CREATE_POST,
             })
         },
