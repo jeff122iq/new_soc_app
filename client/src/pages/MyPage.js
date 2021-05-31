@@ -15,20 +15,20 @@ import {
     Add,
     Chat,
     Favorite,
-    BookmarkBorder
+    BookmarkBorder,
+    Delete
 } from "@material-ui/icons";
 import {connect} from "react-redux";
 import {ACTION_TYPES} from "../actions/actionTypes";
-import Loader from "../components/Loader";
+import {useHistory} from "react-router-dom";
 
 const MyPage = (props) => {
     const [open, setOpen] = useState(false)
     const [token, setToken] = useState(localStorage.getItem("token"))
-    const [like, setLike] = useState(false)
+    const [like, setLike] = useState(0)
     const value = props.state
     const posts = props.state.posts
-    console.log("PROPS", props)
-    console.log("POSTS_FROM_PROPS =>", posts)
+    const history = useHistory()
 
     const decode = jwtDecode(token)
     console.log(decode)
@@ -42,6 +42,7 @@ const MyPage = (props) => {
 
     const handleOpenPost = (item) => {
         console.log(item.id)
+        history.push(`/post/${item.id}`)
         return item.id
     }
 
@@ -51,7 +52,7 @@ const MyPage = (props) => {
     }
 
     const likePost = () => {
-        setLike(true)
+        setLike(like + 1)
         console.log("LIKE")
     }
 
@@ -82,21 +83,25 @@ const MyPage = (props) => {
                 {
                     posts.map(item => {
                         return (
-                            <div className="post" id={item.id} >
+                            <div className="post" id={item.id}>
                                 <div className="postInfo" onClick={() => handleOpenPost(item)}>
                                     <h1>{item.title}</h1>
                                     <p>{item.description}</p>
-                                    <p>Create by: {value.userId}</p>
+                                    <p>Create by: {decode.username}</p>
                                 </div>
                                 <footer className="postFooter">
                                     <IconButton onClick={likePost}>
                                         <Favorite/>
                                     </IconButton>
+                                    {like}
                                     <IconButton>
                                         <Chat/>
                                     </IconButton>
                                     <IconButton>
                                         <BookmarkBorder/>
+                                    </IconButton>
+                                    <IconButton>
+                                        <Delete/>
                                     </IconButton>
                                 </footer>
                             </div>
@@ -152,6 +157,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => {
+
     return {
         createPost: () => {
             dispatch({

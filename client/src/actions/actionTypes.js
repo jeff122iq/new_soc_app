@@ -5,5 +5,6 @@ export const ACTION_TYPES = {
     IS_AUTHENTICATED: Symbol(),
     CREATE_POST: Symbol(),
     GET_POSTS: Symbol(),
+    GET_USER_POST: Symbol(),
     ERROR: Symbol(),
 }

@@ -9,7 +9,8 @@ const {
 } = require("./controllers/userController")
 const {
     createPost,
-    getPosts
+    getPosts,
+    getUserPost
 } = require("./controllers/postController")
 
 //user routes
@@ -21,5 +22,6 @@ router.get("/", home)
 //post routes
 router.post("/create-post", [postMiddleware], createPost)
 router.get("/posts", [postMiddleware], getPosts)
+router.get("/post/:id", [postMiddleware], getUserPost)
 
 module.exports = router
