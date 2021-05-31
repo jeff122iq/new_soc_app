@@ -58,7 +58,6 @@ exports.login = async (req, res) => {
     if (!isMatch) {
         return res.status(400).json({ message: "Неверный пароль" });
     }
-    // Access token generate
     const AccessToken = jwt.sign(
         { id: user.id, username: user.username, email: user.email },
         config.get("JWT_SECRET"), {expiresIn: "1h"}

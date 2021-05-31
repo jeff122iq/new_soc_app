@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import Messages from "../pages/Messages";
 import Subscribers from "../pages/Subscribers";
 import jwtDecode from "jwt-decode";
+import Post from "../pages/Post";
 
 
 const Router = (props) => {
@@ -50,6 +51,7 @@ const Router = (props) => {
                     <Route path={"/subscribers"} exact>
                         <Subscribers/>
                     </Route>
+                    <Route path={"/post/:id"} children={<Post/>}/>
                 </Switch>
         </BrowserRouter>
     );

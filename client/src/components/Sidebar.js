@@ -2,6 +2,13 @@ import React, {useEffect, useState} from 'react';
 import "../styles/sideBar.css"
 import {NavLink} from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import {
+    Home,
+    Email,
+    PostAdd,
+    PeopleAlt,
+    Person
+} from '@material-ui/icons';
 
 const Sidebar = () => {
     const [token, setToken] = useState(localStorage.getItem("token"))
@@ -16,19 +23,23 @@ const Sidebar = () => {
     const sidebarMenu = [
         {
             name: "Home",
-            link: "/home"
+            link: "/home",
+            icon: <Home/>
         },
         {
             name: "My page",
-            link: `/mypage/${decode.username}`
+            link: `/mypage/${decode.username}`,
+            icon: <Person/>
         },
         {
             name: "Messages",
-            link: "/messages"
+            link: "/messages",
+            icon: <Email/>
         },
         {
             name: "Subscribers",
-            link: "/subscribers"
+            link: "/subscribers",
+            icon: <PostAdd/>
         }
     ]
 
@@ -39,6 +50,7 @@ const Sidebar = () => {
                 {sidebarMenu.map((item, idx) => {
                     return (
                         <NavLink key={idx} to={item.link}>
+                            {item.icon}
                             {item.name}
                         </NavLink>
                     )

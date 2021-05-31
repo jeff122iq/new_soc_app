@@ -3,7 +3,6 @@ const crypto = require("crypto");
 const jwt_decode = require("jwt-decode")
 
 exports.createPost = async (req, res) => {
-    // res.send("POST IS CREATED!")
     const id = crypto.randomBytes(16).toString("hex");
     const { title, description } = req.body
     const token = req.headers.authorization
@@ -32,4 +31,19 @@ exports.getPosts = async (req, res) => {
         await res.status(403).json({ message: "Not found" })
     }
     await res.json(posts)
+}
+
+exports.getUserPost = async (req, res) => {
+    try {
+        const postId = req.body.id
+        console.log(postId)
+        const post = await Post.findOne( { where: { id: postId } } )
+        if (!postId || null) {
+            return await res.status(403).json({ message: "Not found" })
+        }
+        await res.json(post)
+    } catch (e) {
+        console.log(e)
+    }
+
 }

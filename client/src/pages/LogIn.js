@@ -19,7 +19,7 @@ const LogIn = (props) => {
 
     const handleLogin = () => {
         const isLoggedIn = props.login()
-        if (!isLoggedIn) {
+        if (isLoggedIn) {
             console.log(123)
             setOpen(true)
             return

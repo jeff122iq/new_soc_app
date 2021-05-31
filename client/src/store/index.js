@@ -1,45 +1,70 @@
-import {applyMiddleware, createStore} from "redux"
+import {applyMiddleware, createStore, combineReducers} from "redux"
 import Axios from "axios"
 import thunk from "redux-thunk"
 import {ACTION_TYPES} from "../actions/actionTypes";
 
-const initialState = {
+const useInitialState = {
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
+    isLoggedIn: false,
+}
+
+const postInitialState = {
     title: "",
     description: "",
-    isLoggedIn: false,
-    posts: []
+    posts: [],
+    post: [],
 }
 
 const createPost = async (title, description) => {
     const token = localStorage.getItem("token")
     try {
-        const post = await Axios.post("http://localhost:5000/create-post", {title, description}, {headers: {
+        const post = await Axios.post("http://localhost:5000/create-post", {title, description}, {
+            headers: {
                 'Authorization': `Bearer ${token}`
-            }})
+            }
+        })
         const result = post.data
-        return initialState.posts.push(result)
+        return postInitialState.posts.push(result)
     } catch (e) {
         console.log(e)
     }
 }
 
-const getPosts = async() => {
+const getPosts = async () => {
     try {
         const token = localStorage.getItem("token")
-        const dbPosts = await Axios.get("http://localhost:5000/posts", {headers: {
-                'Authorization': `Bearer ${token}`}})
-        initialState.posts.length = 0
-        dbPosts.data.map(item => {
-            initialState.posts.push(item)
+        const dbPosts = await Axios.get("http://localhost:5000/posts", {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         })
-        console.log("GET_POSTS", initialState.posts)
-    } catch(e) {
+        postInitialState.posts.length = 0
+        dbPosts.data.map(item => {
+            postInitialState.posts.push(item)
+        })
+        console.log("GET_POSTS", postInitialState.posts)
+    } catch (e) {
         console.log(e)
         return null
+    }
+}
+
+export const getUserPost = async (id) => {
+    try {
+        const token = localStorage.getItem("token")
+        const response = await Axios.get(`http://localhost:5000/post/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        console.log("GET_USER_POST", response.data)
+        const userPost = postInitialState.post.push(response.data)
+        console.log(userPost)
+    } catch (e) {
+        console.log(e)
     }
 }
 
@@ -78,67 +103,86 @@ const login = async (email, password) => {
 
 const logout = () => {
     localStorage.clear()
-    console.log(initialState)
+    console.log(useInitialState)
 }
 
-const reducer = (prevState = initialState, action) => {
-    console.log("PREV STATE =>", prevState)
+const userReducer = (state = useInitialState, action) => {
     switch (action.type) {
         case ACTION_TYPES.REGISTER:
-            register(prevState.username, prevState.email, prevState.password, prevState.confirmPassword)
+            register(state.username, state.email, state.password, state.confirmPassword)
             if (localStorage.getItem("token")) {
-                console.log("PREV_STATE =>", prevState)
+                console.log("PREV_STATE =>", state)
                 return {
-                    ...prevState,
+                    ...state,
                     isLoggedIn: true
                 }
             } else {
                 return {
-                    ...prevState,
+                    ...state,
                 }
             }
         case ACTION_TYPES.LOGIN:
-            login(prevState.email, prevState.password)
+            login(state.email, state.password)
             if (localStorage.getItem("token")) {
-                console.log("PREV_STATE =>", prevState)
+                console.log("PREV_STATE =>", state)
                 return {
-                    ...prevState,
+                    ...state,
                     isLoggedIn: true
                 }
             } else {
                 return {
-                    ...prevState,
+                    ...state,
                 }
             }
         case ACTION_TYPES.IS_AUTHENTICATED:
             isAuthenticated()
             return {
-                ...prevState,
+                ...state,
                 isLoggedIn: true
             }
         case ACTION_TYPES.LOGOUT:
             logout()
             return {
-                ...prevState,
+                ...state,
                 isLoggedIn: false
-            }
-        case ACTION_TYPES.CREATE_POST:
-            createPost(prevState.title, prevState.description)
-            return {
-                ...prevState,
-                posts: prevState.posts
-            }
-        case ACTION_TYPES.GET_POSTS:
-            getPosts()
-            return {
-                ...prevState,
-                posts: prevState.posts
             }
         default:
             return {
-                ...prevState,
+                ...state,
             }
     }
 }
 
-export default createStore(reducer, applyMiddleware(thunk));
+const postReducer = (state = postInitialState, action) => {
+    switch (action.type) {
+        case
+        ACTION_TYPES.CREATE_POST
+        :
+            createPost(state.title, state.description)
+            return {
+                ...state,
+                posts: state.posts
+            }
+        case ACTION_TYPES.GET_POSTS:
+            getPosts()
+            return {
+                ...state,
+                posts: state.posts
+            }
+        case ACTION_TYPES.GET_USER_POST:
+            getUserPost()
+            return {
+                ...state,
+            }
+        default:
+            return {
+                ...state,
+            }
+    }
+}
+const reducers = combineReducers({
+    useInitialState: userReducer,
+    postInitialState: postReducer,
+})
+
+export default createStore( reducers, applyMiddleware(thunk) );
